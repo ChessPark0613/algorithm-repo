@@ -1,5 +1,3 @@
-from collections import deque
-
 N = int(input())
 pic = [list(input()) for _ in range(N)]
 
@@ -7,13 +5,12 @@ dy = [1, -1, 0, 0]
 dx = [0, 0, 1, -1]
 
 def bfs(y, x, chk, is_weak):
-    queue = deque()
-    queue.append((y, x))
+    queue = [(y, x)]
     chk[y][x] = True
     color = pic[y][x]
 
     while queue:
-        cy, cx = queue.popleft()
+        cy, cx = queue.pop(0)
         for i in range(4):
             ny = cy + dy[i]
             nx = cx + dx[i]
