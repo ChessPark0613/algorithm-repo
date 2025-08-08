@@ -1,30 +1,27 @@
 T = int(input())
 
-for test_case in range(1, T + 1):
-    t, length = map(str, input().split())
-    base = list(map(str, input().split()))
+base = ["ZRO", "ONE", "TWO", "THR", "FOR", 
+         "FIV", "SIX", "SVN", "EGT", "NIN"]
+
+def _find(a, b):
+    return base.index(a) - base.index(b)
+
+for _ in range(T):
+    tc, n = input().split()
+    n = int(n)
+    arr = input().split()
+
     res = []
 
-    base_dic = {
-        "ZRO": 0,
-        "ONE": 0,
-        "TWO": 0,
-        "THR": 0,
-        "FOR": 0,
-        "FIV": 0,
-        "SIX": 0,
-        "SVN": 0,
-        "EGT": 0,
-        "NIN": 0
-    }
+    for word in arr:
+        inserted = False
+        for i in range(len(res)):
+            if _find(word, res[i]) < 0:
+                res.insert(i, word)
+                inserted = True
+                break
+        if not inserted:
+            res.append(word)
 
-    for b in base:
-        num = base_dic.get(b) + 1
-        base_dic.update({b: num})
-
-    print(t)
-    tmp = []
-    for d in base_dic:
-        tmp.extend([d] * base_dic.get(d))
-
-    print(*tmp)
+    print(tc)
+    print(*res)
