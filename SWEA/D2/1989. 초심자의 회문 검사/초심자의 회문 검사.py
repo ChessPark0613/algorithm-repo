@@ -1,16 +1,13 @@
 T = int(input())
 
 for test_case in range(1, T + 1):
-    str = list(input())
-    M = len(str)
-    pos = 0
-    is_palindrome = True
+    base = list(map(str, input()))
+    N = len(base)
+    res = 1
 
-    while M // 2 > pos:
-        if str[pos] != str[M - 1 - pos]:
-            is_palindrome = False
+    for x in range(N // 2):
+        if base[x] != base[N - 1 - x]:
+            res = 0
+            break
 
-        pos += 1
-
-    print(f"#{test_case}", int(is_palindrome))
-
+    print(f"#{test_case}", res)
