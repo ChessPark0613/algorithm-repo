@@ -1,32 +1,38 @@
-def find_parent(p, x):
-    if p[x] != x:
-        p[x] = find_parent(p, p[x])
-    return p[x]
+def find(x):
+    if parents[x] != x:
+        parents[x] = find(parents[x])
+    return parents[x]
 
-def union_parent(p, a, b):
-    a = find_parent(p, a)
-    b = find_parent(p, b)
-    if a < b:
-        p[b] = a
-    else:
-        p[a] = b
+def union(a, b):
+    ra, rb = find(a), find(b)
+    if ra == rb:
+        return False
 
-T = int(input())
+    if weights[ra] < weights[rb]:
+        ra, rb = rb, ra
+    parents[rb] = ra
+    weights[ra] += weights[rb]
+    return True
 
-for tc in range(1, T + 1):
-    V, E = map(int, input().split())
-    edges = []
-    for _ in range(E):
-        n1, n2, w = map(int, input().split())
-        edges.append((w, n1, n2))
+if __name__ == "__main__":
+    T = int(input())
 
-    edges.sort()
-    parent = [i for i in range(V + 1)]
+    for tc in range(1, T + 1):
+        V, E = map(int, input().split())
+        edges = [list(map(int, input().split())) for _ in range(E)]
+        edges.sort(key=lambda x: x[2])
 
-    mst_cost = 0
-    for w, n1, n2 in edges:
-        if find_parent(parent, n1) != find_parent(parent, n2):
-            union_parent(parent, n1, n2)
-            mst_cost += w
+        parents = [i for i in range(V + 1)]
+        weights = [1 for _ in range(V + 1)]
 
-    print(f"#{tc} {mst_cost}")
+        mst_cost = 0
+        picked = 0
+
+        for n1, n2, w in edges:
+            if union(n1, n2):
+                mst_cost += w
+                picked += 1
+                if picked == V:
+                    break
+
+        print(f"#{tc} {mst_cost}")
