@@ -1,0 +1,15 @@
+N, M = map(int, input().split())
+res = []
+
+def cur(x):
+    if len(res) == M:
+        print(*res)
+        return
+
+    for i in range(x, N + 1):
+        res.append(i)
+        cur(i)
+        res.pop()
+
+
+cur(1)
