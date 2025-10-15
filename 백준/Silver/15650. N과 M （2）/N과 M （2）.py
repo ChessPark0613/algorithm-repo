@@ -10,7 +10,7 @@ def cur(x):
     for i in range(x, N + 1):
         if i not in res:
             res.append(i)
-            cur(i)
+            cur(i + 1)
             res.pop()
 
 
